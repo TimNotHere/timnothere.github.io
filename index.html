@@ -31,6 +31,11 @@
         }
         .top-bar h1 {
             font-size: 20px;
+            cursor: pointer;  /* Make the text clickable */
+            transition: color 0.3s;
+        }
+        .top-bar h1:hover {
+            color: #007acc;  /* Change color on hover */
         }
         .top-bar button {
             padding: 8px 16px;
@@ -124,7 +129,7 @@
 
     <!-- Top Bar -->
     <div class="top-bar">
-        <h1>HTML Playground</h1>
+        <h1 onclick="reloadPage()">HTML Playground</h1>
         <button class="donate-btn" onclick="window.open('https://cash.app/$isaiahmoral0811', '_blank')">Donate</button>
         <button id="downloadBtn">Download HTML File</button>
     </div>
@@ -190,7 +195,10 @@
         // Default to showing the editor
         toggleEditor('editor');
 
-        
+        // Function to reload the page
+        function reloadPage() {
+            window.location.reload();
+        }
     </script>
 
 </body>
