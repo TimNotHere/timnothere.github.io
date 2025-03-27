@@ -1,200 +1,435 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1272761117859086"
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MemeJedi</title>
+  <link rel="icon" type="image/png" href="fav.png">
+  <style>
+    /* Windows 98 General Styles */
+    body {
+      font-family: 'MS Sans Serif', Geneva, sans-serif;
+      background-color: #C0C0C0;
+      margin: 0;
+      padding: 0;
+      display: flex; /* Use flexbox to center content */
+      justify-content: center; /* Center horizontally */
+      align-items: center; /* Center vertically */
+      min-height: 100vh; /* Ensure the body takes up the full viewport height */
+      overflow: auto; /* Enable scrolling for larger content */
+    }
+
+    .container {
+      background-color: #C0C0C0;
+      border: 2px solid #808080;
+      box-shadow: 5px 5px 10px #808080;
+      padding: 15px;
+      width: 500px;
+      text-align: center;
+      box-sizing: border-box;
+
+      /* Flexbox for centering */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 20px; /* Add spacing between child elements */
+    }
+
+    h1 {
+      font-size: 18px;
+      margin-bottom: 10px;
+      font-weight: normal;
+      color: #000;
+    }
+
+    canvas {
+      border: 1px solid #808080;
+      display: block; /* Ensure the canvas is treated as a block element */
+      max-width: 100%; /* Ensure the canvas doesn't exceed the viewport width */
+      max-height: 100%; /* Ensure the canvas doesn't exceed the viewport height */
+    }
+
+    .text-inputs input, .font-settings input, .font-settings select {
+      background-color: #FFFFFF;
+      border: 2px solid #000080;
+      font-family: 'MS Sans Serif', Geneva, sans-serif;
+      color: #000;
+      padding: 3px 5px;
+      margin: 5px 0;
+      width: 80%;
+    }
+
+    .font-settings {
+      margin-top: 10px;
+    }
+
+    .font-color-container {
+      display: flex;
+      flex-direction: column; /* Stack the label above the input */
+      align-items: flex-start; /* Align items to the left */
+      margin-top: 10px;
+    }
+
+    .checkbox-label {
+      display: flex;
+      justify-content: space-between; /* Space between text and checkbox */
+      align-items: center;
+      width: auto; /* Adjust width to fit content */
+      font-size: 14px;
+      gap: 10px; /* Add spacing between the text and checkbox */
+    }
+
+    .text-inputs,
+    .font-settings,
+    .checkbox-container {
+      width: 100%; /* Ensure child elements take full width */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    button {
+      background-color: #000080;
+      color: white;
+      border: 2px solid #000080;
+      font-family: 'MS Sans Serif', Geneva, sans-serif;
+      padding: 5px 10px;
+      margin-top: 20px;
+      cursor: pointer;
+      font-weight: normal;
+      width: auto; /* Adjust button width to fit content */
+    }
+
+    button:hover {
+      background-color: #0000FF;
+    }
+
+    button:active {
+      background-color: #000066;
+    }
+
+    input[type="file"] {
+      margin-top: 20px;
+    }
+
+    .checkbox-container {
+      display: flex;
+      justify-content: center; /* Center the checkbox and label horizontally */
+      align-items: center; /* Align the checkbox and label vertically */
+      width: 100%; /* Ensure the container spans the full width */
+      margin-top: 10px;
+    }
+
+    .checkbox-container input[type="checkbox"] {
+      width: auto;
+    }
+
+    label {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px; /* Add spacing between the checkbox and the text */
+      margin-top: 10px;
+      font-size: 14px;
+    }
+
+    /* Custom Scrollbars */
+    ::-webkit-scrollbar {
+      width: 12px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background-color: #808080;
+      border-radius: 10px;
+    }
+    ::-webkit-scrollbar-track {
+      background-color: #C0C0C0;
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/gif.js/dist/gif.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gifuct-js@latest/dist/gifuct-js.min.js"></script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1272761117859086"
      crossorigin="anonymous"></script>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HTML Playground</title>
-    <link rel="icon" type="image/png" href="logo.png">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            font-family: 'Consolas', 'Monaco', monospace;
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-            background-color: #1e1e1e;
-            color: #d4d4d4;
-        }
-        /* Top Bar */
-        .top-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 20px;
-            background-color: #333;
-            color: #d4d4d4;
-            border-bottom: 1px solid #444;
-        }
-        .top-bar h1 {
-            font-size: 20px;
-            cursor: pointer;  /* Make the text clickable */
-            transition: color 0.3s;
-        }
-        .top-bar h1:hover {
-            color: #007acc;  /* Change color on hover */
-        }
-        .top-bar button {
-            padding: 8px 16px;
-            font-size: 14px;
-            cursor: pointer;
-            background-color: #007acc;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            transition: background-color 0.3s;
-        }
-        .top-bar button:hover {
-            background-color: #005a8c;
-        }
-        /* Layout */
-        .container {
-            display: flex;
-            flex: 1;
-        }
-        /* Sidebar */
-        .sidebar {
-            width: 200px;
-            background-color: #2d2d2d;
-            padding: 10px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        .sidebar button {
-            padding: 10px;
-            font-size: 14px;
-            background-color: #444;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            text-align: left;
-        }
-        .sidebar button:hover {
-            background-color: #007acc;
-        }
-        /* Editor and Preview */
-        .editor-container {
-            display: flex;
-            flex: 1;
-            margin-left: 10px;
-        }
-        /* Preview Section */
-        .preview {
-            flex: 1;
-            border-radius: 5px;
-            background-color: #252526;
-            padding: 10px;
-            overflow: hidden;
-        }
-        iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-        /* Code Editor Section */
-        .editor {
-            flex: 1;
-            background-color: #1e1e1e;
-            border-radius: 5px;
-        }
-        textarea {
-            width: 100%;
-            height: 100%;
-            padding: 10px;
-            font-size: 14px;
-            background-color: #1e1e1e;
-            color: #d4d4d4;
-            border: none;
-            outline: none;
-            font-family: 'Consolas', 'Monaco', monospace;
-            resize: none;
-        }
-        textarea:focus {
-            background-color: #2d2d2d;
-        }
-    </style>
 </head>
 <body>
+  <div class="container">
+    <img src="logo.png" alt="Meme Generator Logo" style="width: 150px; height: auto; display: block; margin: 0 auto;">
 
-    <!-- Top Bar -->
-    <div class="top-bar">
-        <h1 onclick="reloadPage()">HTML Playground</h1>
-        <button id="downloadBtn">Download HTML File</button>
+    <!-- File Upload Section -->
+    <input type="file" id="imageUpload" accept="image/*">
+
+    <!-- Meme Canvas -->
+    <canvas id="memeCanvas"></canvas>
+
+    <!-- Text Inputs -->
+    <div class="text-inputs">
+      <input type="text" id="topText" placeholder="Top Text">
+      <input type="text" id="bottomText" placeholder="Bottom Text">
     </div>
 
-    <!-- Main Layout -->
-    <div class="container">
-        <!-- Sidebar -->
-        <div class="sidebar">
-            <button onclick="toggleEditor('preview')">Live Preview</button>
-            <button onclick="toggleEditor('editor')">Editor</button>
-        </div>
+    <!-- Font Settings -->
+    <div class="font-settings">
+      <label for="fontSize">Max Font Size:</label>
+      <input type="number" id="fontSize" value="50" min="10" max="100">
 
-        <!-- Editor & Preview Container -->
-        <div class="editor-container">
-            <!-- Live Preview -->
-            <div class="preview" id="preview-container">
-                <iframe id="preview" src="about:blank"></iframe>
-            </div>
+      <div class="font-color-container">
+        <label for="fontColor">Font Color:</label>
+        <input type="color" id="fontColor" value="#FFFFFF">
+      </div>
 
-            <!-- Code Editor -->
-            <div class="editor" id="editor-container">
-                <textarea id="htmlCode" placeholder="Write your HTML code here..."></textarea>
-            </div>
-        </div>
+      <div class="checkbox-container">
+        <label class="checkbox-label">
+          Bold Text:
+          <input type="checkbox" id="boldText">
+        </label>
+      </div>
+
+      <div class="checkbox-container">
+        <label class="checkbox-label">
+          Enable White Bar:
+          <input type="checkbox" id="whiteBar">
+        </label>
+      </div>
     </div>
 
-    <script>
-        const htmlCodeInput = document.getElementById('htmlCode');
-        const preview = document.getElementById('preview');
-        const downloadBtn = document.getElementById('downloadBtn');
-        const previewContainer = document.getElementById('preview-container');
-        const editorContainer = document.getElementById('editor-container');
+    <!-- Action Buttons -->
+    <button id="downloadBtn">Download Meme</button>
+  </div>
 
-        // Update preview on input change
-        htmlCodeInput.addEventListener('input', () => {
-            const code = htmlCodeInput.value;
-            preview.srcdoc = code;
-        });
+  <script>
+    const imageUpload = document.getElementById('imageUpload');
+    const memeCanvas = document.getElementById('memeCanvas');
+    const topTextInput = document.getElementById('topText');
+    const bottomTextInput = document.getElementById('bottomText');
+    const fontSizeInput = document.getElementById('fontSize');
+    const fontColorInput = document.getElementById('fontColor');
+    const downloadBtn = document.getElementById('downloadBtn');
+    const whiteBarCheckbox = document.getElementById('whiteBar');
+    const boldTextCheckbox = document.getElementById('boldText');
 
-        // Handle downloading HTML file
-        downloadBtn.addEventListener('click', () => {
-            const code = htmlCodeInput.value;
-            const blob = new Blob([code], { type: 'text/html' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'code.html';
-            a.click();
-            URL.revokeObjectURL(url);
-        });
+    let memeImage = new Image();
 
-        // Toggle Editor and Preview view
-        function toggleEditor(view) {
-            if (view === 'preview') {
-                previewContainer.style.display = 'block';
-                editorContainer.style.display = 'none';
-            } else if (view === 'editor') {
-                previewContainer.style.display = 'none';
-                editorContainer.style.display = 'block';
+    imageUpload.addEventListener('change', async (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        const fileType = file.type;
+        console.log('Uploaded file type:', fileType);
+
+        if (fileType === 'image/gif') {
+          try {
+            // Access parseGIF and decompressFrames from the global scope
+            const parseGIF = window.parseGIF;
+            const decompressFrames = window.decompressFrames;
+
+            const arrayBuffer = await file.arrayBuffer();
+            const gif = parseGIF(arrayBuffer); // Use parseGIF directly
+            const frames = decompressFrames(gif, true); // Use decompressFrames directly
+            console.log('Parsed GIF frames:', frames);
+
+            // Render the first frame to the canvas
+            const firstFrame = frames[0];
+            console.log('First frame dimensions:', firstFrame.dims);
+
+            const imageData = new ImageData(
+              new Uint8ClampedArray(firstFrame.patch),
+              firstFrame.dims.width,
+              firstFrame.dims.height
+            );
+
+            memeCanvas.width = firstFrame.dims.width;
+            memeCanvas.height = firstFrame.dims.height;
+
+            const ctx = memeCanvas.getContext('2d');
+            ctx.clearRect(0, 0, memeCanvas.width, memeCanvas.height);
+            ctx.putImageData(imageData, 0, 0);
+
+            // Store frames for editing
+            memeImage.frames = frames;
+          } catch (error) {
+            console.error('Error parsing GIF:', error);
+          }
+        } else {
+          const reader = new FileReader();
+          reader.onload = function (event) {
+            memeImage.src = event.target.result;
+          };
+          reader.readAsDataURL(file);
+        }
+      }
+    });
+
+    memeImage.onload = () => {
+      // Resize the canvas to fit within the container while maintaining aspect ratio
+      const maxCanvasWidth = 500; // Maximum width of the canvas
+      const maxCanvasHeight = 500; // Maximum height of the canvas
+
+      const aspectRatio = memeImage.width / memeImage.height;
+
+      if (memeImage.width > maxCanvasWidth || memeImage.height > maxCanvasHeight) {
+        if (aspectRatio > 1) {
+          memeCanvas.width = maxCanvasWidth;
+          memeCanvas.height = maxCanvasWidth / aspectRatio;
+        } else {
+          memeCanvas.height = maxCanvasHeight;
+          memeCanvas.width = maxCanvasHeight * aspectRatio;
+        }
+      } else {
+        memeCanvas.width = memeImage.width;
+        memeCanvas.height = memeImage.height;
+      }
+
+      drawMeme();
+    };
+
+    topTextInput.addEventListener('input', drawMeme);
+    bottomTextInput.addEventListener('input', drawMeme);
+    fontSizeInput.addEventListener('input', drawMeme);
+    fontColorInput.addEventListener('input', drawMeme);
+    whiteBarCheckbox.addEventListener('change', drawMeme);
+    boldTextCheckbox.addEventListener('change', drawMeme);
+
+    function drawMeme() {
+      const ctx = memeCanvas.getContext('2d');
+
+      // Clear the canvas
+      ctx.clearRect(0, 0, memeCanvas.width, memeCanvas.height);
+
+      if (!memeImage.frames) {
+        // Draw static image
+        ctx.drawImage(memeImage, 0, 0, memeCanvas.width, memeCanvas.height);
+      }
+
+      const maxFontSize = parseInt(fontSizeInput.value);
+      const fontColor = fontColorInput.value;
+      const showWhiteBar = whiteBarCheckbox.checked;
+      const isBold = boldTextCheckbox.checked;
+
+      function fitText(ctx, text, maxWidth, maxHeight) {
+        let fontSize = maxFontSize; // Start with the maximum font size
+        let lineHeight = fontSize * 1.2;
+
+        ctx.font = `${isBold ? 'bold' : 'normal'} ${fontSize}px Arial`; // Apply bold if enabled
+        let words = text.split(' ');
+        let lines = [];
+        let line = '';
+
+        // Break text into lines that fit within the maxWidth
+        for (let i = 0; i < words.length; i++) {
+          let testLine = line + words[i] + ' ';
+          let testWidth = ctx.measureText(testLine).width;
+          if (testWidth > maxWidth && i > 0) {
+            lines.push(line);
+            line = words[i] + ' ';
+          } else {
+            line = testLine;
+          }
+        }
+        lines.push(line);
+
+        // Reduce font size if the total height of lines exceeds maxHeight
+        while (lines.length * lineHeight > maxHeight && fontSize > 10) {
+          fontSize--;
+          lineHeight = fontSize * 1.2;
+          ctx.font = `${isBold ? 'bold' : 'normal'} ${fontSize}px Arial`; // Apply bold if enabled
+          lines = [];
+          line = '';
+
+          for (let i = 0; i < words.length; i++) {
+            let testLine = line + words[i] + ' ';
+            let testWidth = ctx.measureText(testLine).width;
+            if (testWidth > maxWidth && i > 0) {
+              lines.push(line);
+              line = words[i] + ' ';
+            } else {
+              line = testLine;
             }
+          }
+          lines.push(line);
         }
 
-        // Default to showing the editor
-        toggleEditor('editor');
+        return { lines, fontSize, lineHeight };
+      }
 
-        // Function to reload the page
-        function reloadPage() {
-            window.location.reload();
+      function drawTextWithBackground(text, x, y, isBottom) {
+        const maxWidth = memeCanvas.width * 0.9;
+        const maxHeight = memeCanvas.height * 0.15;
+
+        let { lines, fontSize, lineHeight } = fitText(ctx, text, maxWidth, maxHeight);
+
+        let barHeight = lines.length * lineHeight * 1.2;
+
+        if (showWhiteBar) {
+          let barY = isBottom ? memeCanvas.height - barHeight - 10 : 0;
+          ctx.fillStyle = "white";
+          ctx.fillRect(0, barY, memeCanvas.width, barHeight + 10);
         }
-    </script>
 
+        ctx.textAlign = 'center';
+
+        let startY = isBottom ? memeCanvas.height - barHeight + fontSize : fontSize + 10;
+
+        lines.forEach((line, i) => {
+          let textY = startY + i * lineHeight;
+
+          // Set the font color before drawing the text
+          ctx.fillStyle = fontColor;
+          ctx.fillText(line, x, textY);
+        });
+      }
+
+      if (topTextInput.value) {
+        drawTextWithBackground(topTextInput.value, memeCanvas.width / 2, fontSizeInput.value * 2, false);
+      }
+
+      if (bottomTextInput.value) {
+        drawTextWithBackground(bottomTextInput.value, memeCanvas.width / 2, memeCanvas.height - fontSizeInput.value * 2, true);
+      }
+    }
+
+    function exportGIF() {
+      const gif = new GIF({
+        workers: 2,
+        quality: 10,
+      });
+
+      const ctx = memeCanvas.getContext('2d');
+
+      memeImage.frames.forEach((frame) => {
+        const imageData = new ImageData(
+          new Uint8ClampedArray(frame.patch),
+          frame.dims.width,
+          frame.dims.height
+        );
+
+        ctx.putImageData(imageData, 0, 0);
+
+        // Add text or other edits here
+        drawMeme();
+
+        gif.addFrame(ctx, { copy: true, delay: frame.delay });
+      });
+
+      gif.on('finished', (blob) => {
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'edited-meme.gif';
+        a.click();
+      });
+
+      gif.render();
+    }
+
+    downloadBtn.addEventListener('click', () => {
+      if (memeImage.frames) {
+        exportGIF();
+      } else {
+        const dataUrl = memeCanvas.toDataURL();
+        const a = document.createElement('a');
+        a.href = dataUrl;
+        a.download = 'meme.png';
+        a.click();
+      }
+    });
+  </script>
 </body>
 </html>
