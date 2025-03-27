@@ -9,7 +9,7 @@
     /* Windows 98 General Styles */
     body {
       font-family: 'MS Sans Serif', Geneva, sans-serif;
-      background-color: #C0C0C0;
+      background-color: #008080; /* Change the background color */
       margin: 0;
       padding: 0;
       display: flex; /* Use flexbox to center content */
@@ -20,9 +20,8 @@
     }
 
     .container {
-      background-color: #C0C0C0;
+      background-color: #C0C0C0; /* Keep the container gray */
       border: 2px solid #808080;
-      box-shadow: 5px 5px 10px #808080;
       padding: 15px;
       width: 500px;
       text-align: center;
@@ -216,9 +215,9 @@
 
         if (fileType === 'image/gif') {
           try {
-            // Access parseGIF and decompressFrames from the global scope
-            const parseGIF = window.parseGIF;
-            const decompressFrames = window.decompressFrames;
+            // Access parseGIF and decompressFrames from the gifuct-js library
+            const parseGIF = window.gifuct.parseGIF;
+            const decompressFrames = window.gifuct.decompressFrames;
 
             const arrayBuffer = await file.arrayBuffer();
             const gif = parseGIF(arrayBuffer); // Use parseGIF directly
