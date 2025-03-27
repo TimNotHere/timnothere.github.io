@@ -1,3 +1,3 @@
 ![Logo](logo.png)
-# HTML Playground
+# MemeJedi
 created by TimNotHere
